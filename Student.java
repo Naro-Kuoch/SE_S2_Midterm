@@ -7,6 +7,21 @@ public class Student {
     private Date dob; //date of birth
     private int year;
     public Student(){};
+    public Student(String id,String name, String tel, String country,String city,String gr,String dob,int year){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        setId(id);
+        setName(name);
+        setCity(city);
+        setCountry(country);
+        try {
+            setDob(format.parse(dob));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        setTelephone(tel);
+        setYear(year);
+        
+    }
     public void DisplayStudent(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("Student ID: "+getId());
@@ -105,10 +120,13 @@ public class Student {
             throw new GroupNameException("Group must begin with I or T");
         }
         int y = gr[1];
-        if(y>5 && y<1){
-            throw new GroupNameException("Invalid year");
+        if( gr[0]=='I' && (y>5 || y<1)){
+            throw new GroupNameException("Invalid year for enginner");
         }
-        if(gr.length<5){
+        if( gr[0]=='T' && (y>2 || y<1)){
+            throw new GroupNameException("Invalid year for Technician");
+        }
+        if(gr.length<5 || gr.length>2){
             for(int i =2; i< gr.length;i++){
                 if(!(gr[i]>='A' && gr[i]<='Z'))
                     throw new GroupNameException("Group should be ended by Latin alphabets");
